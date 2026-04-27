@@ -2,11 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth, entries, udhar, admin, payments, reports
 
-app = FastAPI(title="KhataBook API", version="1.0.0")
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://personal-expense-manager-phi.vercel.app"],
+    allow_origins=[
+        "https://personal-expense-manager-phi.vercel.app",
+        "https://personal-expense-manager-5bk2hoz3i.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
