@@ -1,0 +1,61 @@
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3347;
+  --accent: #f97316; --accent2: #fb923c;
+  --green: #22c55e; --red: #ef4444; --blue: #3b82f6; --yellow: #eab308;
+  --text: #f1f5f9; --muted: #94a3b8; --card: #1e2235;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+input, select, button { font-family: inherit; }
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.card-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.card-title { font-weight: 700; font-size: 1rem; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 11px 18px; font-size: .73rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+td { padding: 12px 18px; font-size: .88rem; border-bottom: 1px solid #1e223466; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #ffffff05; }
+
+.btn { padding: 10px 20px; border-radius: 10px; border: none; font-size: .9rem; font-weight: 700; cursor: pointer; transition: .2s; font-family: inherit; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-secondary { background: var(--surface2); border: 1px solid var(--border); color: var(--text); }
+.btn-secondary:hover { border-color: var(--muted); }
+.btn-danger { background: #ef444422; border: 1px solid var(--red); color: var(--red); }
+.btn-sm { padding: 6px 14px; font-size: .8rem; border-radius: 8px; }
+.btn-success { background: #22c55e22; border: 1px solid var(--green); color: var(--green); }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: .78rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .4px; }
+.field input, .field select, .field textarea {
+  width: 100%; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 11px 14px; color: var(--text); font-size: .92rem;
+}
+.field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+
+.chip { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: .74rem; font-weight: 700; }
+.chip-expense { background: #ef444422; color: var(--red); }
+.chip-income { background: #22c55e22; color: var(--green); }
+.chip-gave { background: #3b82f622; color: var(--blue); }
+.chip-got { background: #eab30822; color: var(--yellow); }
+.chip-pending { background: #eab30822; color: var(--yellow); }
+.chip-paid { background: #22c55e22; color: var(--green); }
+
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+.stat-label { font-size: .73rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.stat-value { font-family: 'Baloo 2', sans-serif; font-size: 1.6rem; font-weight: 800; }
+.stat-sub { font-size: .76rem; color: var(--muted); margin-top: 3px; }
+
+.page-title { font-family: 'Baloo 2', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 22px; }
+.empty { text-align: center; padding: 40px; color: var(--muted); font-size: .9rem; }
+.overlay { position: fixed; inset: 0; background: #0009; z-index: 200; display: flex; align-items: center; justify-content: center; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; width: 440px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+.modal-title { font-family: 'Baloo 2', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.filter-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-bar input, .filter-bar select { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 8px 12px; color: var(--text); font-size: .85rem; }
