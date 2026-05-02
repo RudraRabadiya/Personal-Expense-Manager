@@ -7,12 +7,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-allow_origins=[
-    "http://localhost:5173",
-    "https://personal-expense-manager-nhvvb9poc.vercel.app",
-    "https://personal-expense-manager-15szrs2zs.vercel.app",
-    "https://personal-expense-manager-gules.vercel.app",
-],
+allow_origins=[*],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
