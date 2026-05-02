@@ -13,9 +13,7 @@ app.add_middleware(
     allow_origins=[
         frontend_url,
         "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:5175",
-        "http://localhost:3000",
+        "https://personal-expense-manager-nhvvb9poc.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
