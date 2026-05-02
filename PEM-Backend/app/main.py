@@ -2,11 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth, entries, udhar, admin, payments, reports
 
+import os
+
+app = FastAPI()
+
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://personal-expense-manager-phi.vercel.app",
-        "https://personal-expense-manager-5bk2hoz3i.vercel.app"
+        frontend_url,
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:3000",
     ],
     allow_credentials=True,
     allow_methods=["*"],

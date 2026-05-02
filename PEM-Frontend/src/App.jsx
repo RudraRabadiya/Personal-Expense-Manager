@@ -25,8 +25,19 @@ function ProtectedRoute({ children, adminOnly = false }) {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Toaster position="top-right" toastOptions={{ style: { background: '#1e2235', color: '#f1f5f9', border: '1px solid #2e3347' } }} />
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: '#0d1220',
+              color: '#e2e8f0',
+              border: '1px solid #1e2d45',
+              fontFamily: 'DM Sans, sans-serif',
+              fontSize: '0.875rem',
+            },
+          }}
+        />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

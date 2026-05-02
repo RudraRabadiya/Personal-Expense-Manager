@@ -4,20 +4,24 @@ import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
 const userNav = [
-  { to: '/dashboard', icon: '📊', label: 'Dashboard' },
-  { to: '/expenses', icon: '💸', label: LABELS.expense },
-  { to: '/income', icon: '💰', label: LABELS.income },
-  { to: '/udhar', icon: '🤝', label: 'Udhar Book' },
-  { to: '/all-entries', icon: '📋', label: 'All Entries' },
-  { to: '/reports', icon: '📈', label: 'Reports' },
+  { to: '/dashboard',   icon: '▦',  label: 'Dashboard'   },
+  { to: '/expenses',    icon: '↓',  label: LABELS.expense },
+  { to: '/income',      icon: '↑',  label: LABELS.income  },
+  { to: '/udhar',       icon: '⇌',  label: 'Udhar Book'  },
+  { to: '/all-entries', icon: '☰',  label: 'All Entries' },
+  { to: '/reports',     icon: '↗',  label: 'Reports'     },
 ]
 const adminNav = [
-  { to: '/dashboard', icon: '📊', label: 'Dashboard' },
-  { to: '/admin', icon: '👥', label: 'All Users' },
-  { to: '/udhar', icon: '🤝', label: 'Udhar Book' },
-  { to: '/all-entries', icon: '📋', label: 'All Entries' },
-  { to: '/reports', icon: '📈', label: 'My Reports' },
+  { to: '/dashboard',   icon: '▦',  label: 'Dashboard'   },
+  { to: '/admin',       icon: '◎',  label: 'All Users'   },
+  { to: '/udhar',       icon: '⇌',  label: 'Udhar Book'  },
+  { to: '/all-entries', icon: '☰',  label: 'All Entries' },
+  { to: '/reports',     icon: '↗',  label: 'My Reports'  },
 ]
+
+function getInitials(name = '') {
+  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+}
 
 export default function Layout() {
   const { user, logout } = useAuth()
@@ -31,34 +35,46 @@ export default function Layout() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <div style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 28px', height: 60, position: 'sticky', top: 0, zIndex: 100 }}>
-        <div style={{ fontFamily: "'Baloo 2'", fontSize: '1.4rem', fontWeight: 800, color: 'var(--accent)' }}>📒 {LABELS.appName}</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <span style={{ background: user?.role === 'admin' ? '#eab30811' : 'var(--surface2)', border: `1px solid ${user?.role === 'admin' ? '#eab30855' : 'var(--border)'}`, color: user?.role === 'admin' ? 'var(--yellow)' : 'var(--muted)', borderRadius: 20, padding: '3px 12px', fontSize: '.74rem', fontWeight: 700 }}>{user?.role?.toUpperCase()}</span>
-          <span style={{ fontWeight: 700, fontSize: '.9rem' }}>{user?.name}</span>
-          <button className="btn btn-secondary btn-sm" onClick={handleLogout}>Logout</button>
+    <div className="layout-root">
+      {/* ── Sidebar ── */}
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <span>₹</span>
+          <span>KhataBook</span>
         </div>
-      </div>
-      <div style={{ display: 'flex', flex: 1 }}>
-        <div style={{ width: 210, background: 'var(--surface)', borderRight: '1px solid var(--border)', padding: '20px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+
+        <nav style={{ flex: 1 }}>
           {nav.map(n => (
-            <NavLink key={n.to} to={n.to} end={n.to==='/dashboard'||n.to==='/admin'}
-              style={({ isActive }) => ({
-                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px',
-                borderRadius: 10, fontSize: '.9rem', fontWeight: 600, cursor: 'pointer',
-                color: isActive ? 'var(--accent)' : 'var(--muted)',
-                background: isActive ? '#f9731622' : 'transparent',
-                textDecoration: 'none', transition: '.2s'
-              })}>
-              <span>{n.icon}</span>{n.label}
+            <NavLink
+              key={n.to}
+              to={n.to}
+              end={n.to === '/dashboard' || n.to === '/admin'}
+              className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+            >
+              <span className="nav-icon">{n.icon}</span>
+              <span>{n.label}</span>
             </NavLink>
           ))}
+        </nav>
+
+        <div className="sidebar-footer">
+          <div className="user-info">
+            <div className="user-avatar">{getInitials(user?.name)}</div>
+            <div>
+              <div className="user-name">{user?.name?.split(' ')[0]}</div>
+              <div className="user-role">{user?.role}</div>
+            </div>
+          </div>
+          <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={handleLogout}>
+            ⏻ Logout
+          </button>
         </div>
-        <div style={{ flex: 1, padding: '30px 34px', overflowY: 'auto' }}>
-          <Outlet />
-        </div>
-      </div>
+      </aside>
+
+      {/* ── Main Content ── */}
+      <main className="main-content">
+        <Outlet />
+      </main>
     </div>
   )
 }

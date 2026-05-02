@@ -2,17 +2,29 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../lib/api'
 import { fmt, fmtDate, LABELS } from '../../lib/utils'
+import { exportUserPDF } from '../../lib/exportPDF'
+import toast from 'react-hot-toast'
 
 export default function AdminUserDetail() {
   const { userId } = useParams()
   const navigate = useNavigate()
-  const [data, setData] = useState(null)
-  const [tab, setTab] = useState('entries')
+  const [data, setData]       = useState(null)
+  const [tab, setTab]         = useState('entries')
   const [loading, setLoading] = useState(true)
+  const [pdfLoading, setPdfLoading] = useState(false)
 
   useEffect(() => {
     api.get(`/admin/users/${userId}/full`).then(r => { setData(r.data); setLoading(false) })
   }, [userId])
+
+  const downloadPDF = async () => {
+    setPdfLoading(true)
+    try {
+      exportUserPDF(data)
+      toast.success('PDF exported!')
+    } catch { toast.error('Failed to export PDF') }
+    finally { setPdfLoading(false) }
+  }
 
   if (loading) return <div className="empty">Loading user data...</div>
 
@@ -23,6 +35,14 @@ export default function AdminUserDetail() {
       <div style={{display:'flex',gap:10,marginBottom:18}}>
         <button className="btn btn-secondary btn-sm" onClick={()=>navigate('/admin')}>← Back to Users</button>
         <button className="btn btn-primary btn-sm" onClick={()=>navigate(`/admin/users/${userId}/reports`)}>📈 View Reports</button>
+        <button
+          className="btn btn-sm"
+          style={{ background: 'var(--red-dim)', border: '1px solid #f43f5e40', color: '#f43f5e', marginLeft: 'auto' }}
+          onClick={downloadPDF}
+          disabled={pdfLoading}
+        >
+          {pdfLoading ? '⏳ Generating…' : '↓ Export PDF'}
+        </button>
       </div>
 
       <div className="page-title">👤 {profile.name}</div>
