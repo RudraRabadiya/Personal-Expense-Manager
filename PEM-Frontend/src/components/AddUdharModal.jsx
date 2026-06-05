@@ -3,6 +3,13 @@ import api from '../lib/api'
 import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
+// FastAPI validation errors return detail as an array of objects
+const parseApiError = (err) => {
+  const detail = err?.response?.data?.detail
+  if (Array.isArray(detail)) return detail.map(d => d.msg || String(d)).join(', ')
+  return typeof detail === 'string' ? detail : 'Something went wrong'
+}
+
 /**
  * AddUdharModal — handles both Add and Edit modes.
  * Pass `udhar` prop to enter edit mode (pre-fills form, calls PUT).
@@ -36,7 +43,16 @@ export default function AddUdharModal({ udhar = null, onClose, onSuccess }) {
     setLoading(true)
     try {
       if (isEdit) {
-        await api.put(`/udhar/${udhar.id}`, payload)
+        // PUT only accepts UdharUpdate fields — do NOT send `type`
+        const updatePayload = {
+          person_name: payload.person_name,
+          amount:      payload.amount,
+          description: payload.description,
+          date:        payload.date,
+          due_date:    payload.due_date,
+          notes:       payload.notes,
+        }
+        await api.put(`/udhar/${udhar.id}`, updatePayload)
         toast.success('Udhar entry updated!')
       } else {
         await api.post('/udhar/', payload)
@@ -44,7 +60,7 @@ export default function AddUdharModal({ udhar = null, onClose, onSuccess }) {
       }
       onSuccess(); onClose()
     } catch (err) {
-      toast.error(err.response?.data?.detail || 'Failed')
+      toast.error(parseApiError(err))
     } finally { setLoading(false) }
   }
 

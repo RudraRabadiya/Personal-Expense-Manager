@@ -3,6 +3,13 @@ import api from '../lib/api'
 import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
+// FastAPI validation errors return detail as an array of objects
+const parseApiError = (err) => {
+  const detail = err?.response?.data?.detail
+  if (Array.isArray(detail)) return detail.map(d => d.msg || String(d)).join(', ')
+  return typeof detail === 'string' ? detail : 'Something went wrong'
+}
+
 const EXPENSE_CATS = ['Food','Transport','Bills','Shopping','Health','Entertainment','Education','Other']
 const INCOME_CATS  = ['Salary','Freelance','Business','Investment','Gift','Other']
 
@@ -44,7 +51,7 @@ export default function AddEntryModal({ type: defaultType = 'expense', entry = n
       }
       onSuccess(); onClose()
     } catch (err) {
-      toast.error(err.response?.data?.detail || 'Failed to save')
+      toast.error(parseApiError(err))
     } finally { setLoading(false) }
   }
 
