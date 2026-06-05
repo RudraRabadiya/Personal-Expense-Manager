@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import api from '../lib/api'
 import { fmt, fmtDate, LABELS } from '../lib/utils'
+import { exportExcel } from '../lib/exportExcel'
+import toast from 'react-hot-toast'
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
 
@@ -38,6 +40,23 @@ export default function Reports() {
           <div className="page-title">Reports</div>
           <div className="page-subtitle">Financial summaries and breakdowns</div>
         </div>
+        {data && (
+          <button
+            id="reports-export-excel-btn"
+            className="btn btn-success btn-sm"
+            onClick={() => {
+              const entries = data.entries || []
+              const udhar   = data.udhar_this_month || []
+              const label   = view === 'monthly'
+                ? `PEM_${data.month_name}_${data.year}`
+                : `PEM_Year_${data.year}`
+              exportExcel(entries, udhar, label)
+              toast.success('Excel file downloaded!')
+            }}
+          >
+            📥 Export Excel
+          </button>
+        )}
       </div>
 
       {/* ── Controls ── */}

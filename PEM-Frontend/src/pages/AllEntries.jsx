@@ -3,6 +3,7 @@ import api from '../lib/api'
 import { fmt, fmtDate, LABELS } from '../lib/utils'
 import AddEntryModal from '../components/AddEntryModal'
 import AddUdharModal from '../components/AddUdharModal'
+import { exportExcel } from '../lib/exportExcel'
 import toast from 'react-hot-toast'
 
 export default function AllEntries() {
@@ -107,6 +108,18 @@ export default function AllEntries() {
           <div className="page-subtitle">{filtered.length} of {allItems.length} records</div>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            id="export-excel-btn"
+            className="btn btn-success btn-sm"
+            onClick={() => {
+              const filteredEntries = filtered.filter(i => i._kind === 'entry')
+              const filteredUdhar  = filtered.filter(i => i._kind === 'udhar')
+              exportExcel(filteredEntries, filteredUdhar, 'PEM_AllEntries')
+              toast.success('Excel file downloaded!')
+            }}
+          >
+            📥 Export Excel
+          </button>
           <button className="btn btn-secondary btn-sm" onClick={() => setShowUdharModal(true)}>+ Udhar</button>
           <button className="btn btn-primary btn-sm" onClick={() => setShowEntryModal(true)}>+ Entry</button>
         </div>

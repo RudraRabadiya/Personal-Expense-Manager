@@ -1,5 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
@@ -25,6 +26,7 @@ function getInitials(name = '') {
 
 export default function Layout() {
   const { user, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const nav = user?.role === 'admin' ? adminNav : userNav
 
@@ -58,14 +60,35 @@ export default function Layout() {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="user-info">
+          {/* Theme Toggle */}
+          <button
+            id="theme-toggle-btn"
+            className="btn btn-secondary btn-sm"
+            style={{ width: '100%', marginBottom: 8, justifyContent: 'center', gap: 8 }}
+            onClick={toggleTheme}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+            <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
+
+          {/* Profile link */}
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `user-info${isActive ? ' user-info--active' : ''}`
+            }
+            style={{ textDecoration: 'none', display: 'flex', cursor: 'pointer' }}
+            title="My Profile"
+          >
             <div className="user-avatar">{getInitials(user?.name)}</div>
             <div>
               <div className="user-name">{user?.name?.split(' ')[0]}</div>
               <div className="user-role">{user?.role}</div>
             </div>
-          </div>
-          <button className="btn btn-secondary btn-sm" style={{ width: '100%' }} onClick={handleLogout}>
+          </NavLink>
+
+          <button className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: 8 }} onClick={handleLogout}>
             ⏻ Logout
           </button>
         </div>
