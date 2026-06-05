@@ -11,6 +11,8 @@ export default function AllEntries() {
   const [udhar, setUdhar]             = useState([])
   const [showEntryModal, setShowEntryModal] = useState(false)
   const [showUdharModal, setShowUdharModal] = useState(false)
+  const [editEntry, setEditEntry]     = useState(null)
+  const [editUdhar, setEditUdhar]     = useState(null)
   const [filter, setFilter]           = useState('all')
   const [search, setSearch]           = useState('')
   const [loading, setLoading]         = useState(true)
@@ -182,13 +184,22 @@ export default function AllEntries() {
                   {amtCell(item)}
                   {statusCell(item)}
                   <td>
-                    <button
-                      className="btn btn-danger btn-icon"
-                      title="Delete"
-                      onClick={() => item._kind === 'entry' ? deleteEntry(item.id) : deleteUdhar(item.id)}
-                    >
-                      🗑
-                    </button>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button
+                        className="btn btn-secondary btn-icon"
+                        title="Edit"
+                        onClick={() => item._kind === 'entry' ? setEditEntry(item) : setEditUdhar(item)}
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        className="btn btn-danger btn-icon"
+                        title="Delete"
+                        onClick={() => item._kind === 'entry' ? deleteEntry(item.id) : deleteUdhar(item.id)}
+                      >
+                        🗑
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -204,6 +215,8 @@ export default function AllEntries() {
 
       {showEntryModal && <AddEntryModal onClose={() => setShowEntryModal(false)} onSuccess={load} />}
       {showUdharModal && <AddUdharModal onClose={() => setShowUdharModal(false)} onSuccess={load} />}
+      {editEntry      && <AddEntryModal entry={editEntry}  onClose={() => setEditEntry(null)}  onSuccess={load} />}
+      {editUdhar      && <AddUdharModal udhar={editUdhar}  onClose={() => setEditUdhar(null)}  onSuccess={load} />}
     </div>
   )
 }

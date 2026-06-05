@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 export default function Income() {
   const [entries, setEntries] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const [editEntry, setEditEntry] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const load = async () => {
@@ -91,7 +92,10 @@ export default function Income() {
                   </td>
                   <td style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>{e.notes || '—'}</td>
                   <td>
-                    <button className="btn btn-danger btn-icon" title="Delete" onClick={() => deleteEntry(e.id)}>🗑</button>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button className="btn btn-secondary btn-icon" title="Edit" onClick={() => setEditEntry(e)}>✏️</button>
+                      <button className="btn btn-danger btn-icon" title="Delete" onClick={() => deleteEntry(e.id)}>🗑</button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -105,7 +109,8 @@ export default function Income() {
         )}
       </div>
 
-      {showModal && <AddEntryModal type="income" onClose={() => setShowModal(false)} onSuccess={load} />}
+      {showModal  && <AddEntryModal type="income" onClose={() => setShowModal(false)} onSuccess={load} />}
+      {editEntry  && <AddEntryModal entry={editEntry} onClose={() => setEditEntry(null)} onSuccess={load} />}
     </div>
   )
 }

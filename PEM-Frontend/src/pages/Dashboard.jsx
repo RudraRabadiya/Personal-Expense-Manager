@@ -14,6 +14,13 @@ function getGreeting() {
   return 'Good Evening'
 }
 
+function getDueDays(due_date) {
+  if (!due_date) return null
+  const today = new Date(); today.setHours(0, 0, 0, 0)
+  const due   = new Date(due_date); due.setHours(0, 0, 0, 0)
+  return Math.round((due - today) / (1000 * 60 * 60 * 24))
+}
+
 function buildChartData(entries) {
   const months = {}
   const now = new Date()
@@ -75,8 +82,35 @@ export default function Dashboard() {
     </div>
   )
 
+  const overdueUdhar  = udhar.filter(u => u.status !== 'paid' && u.due_date && getDueDays(u.due_date) < 0)
+  const dueTodayUdhar = udhar.filter(u => u.status !== 'paid' && u.due_date && getDueDays(u.due_date) === 0)
+  const urgentCount   = overdueUdhar.length + dueTodayUdhar.length
+
   return (
     <div>
+      {/* ── Overdue Udhar Alert ── */}
+      {urgentCount > 0 && (
+        <div style={{
+          background: overdueUdhar.length > 0 ? 'linear-gradient(135deg,#f43f5e18,#f43f5e06)' : 'linear-gradient(135deg,#f59e0b18,#f59e0b06)',
+          border: `1px solid ${overdueUdhar.length > 0 ? '#f43f5e40' : '#f59e0b40'}`,
+          borderRadius: 'var(--radius-md)', padding: '14px 20px',
+          marginBottom: 20, display: 'flex', alignItems: 'center', gap: 12,
+          animation: 'fadeUp 0.4s ease',
+        }}>
+          <span style={{ fontSize: '1.4rem' }}>{overdueUdhar.length > 0 ? '🚨' : '⚠️'}</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 700, color: overdueUdhar.length > 0 ? 'var(--red)' : 'var(--yellow)', fontSize: '0.9rem' }}>
+              {overdueUdhar.length > 0 && `${overdueUdhar.length} udhar ${overdueUdhar.length === 1 ? 'entry' : 'entries'} overdue! `}
+              {dueTodayUdhar.length > 0 && `${dueTodayUdhar.length} ${dueTodayUdhar.length === 1 ? 'entry' : 'entries'} due today.`}
+            </div>
+            <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 2 }}>
+              {[...overdueUdhar, ...dueTodayUdhar].map(u => u.person_name).join(', ')}
+            </div>
+          </div>
+          <a href="/udhar" style={{ color: 'var(--accent)', fontSize: '0.8rem', fontWeight: 600, whiteSpace: 'nowrap', textDecoration: 'none' }}>View Udhar →</a>
+        </div>
+      )}
+
       {/* ── Greeting ── */}
       <div className="greeting fade-up">
         <div className="greeting-text">
