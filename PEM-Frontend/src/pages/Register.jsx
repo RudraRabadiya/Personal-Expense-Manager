@@ -26,7 +26,7 @@ export default function Register() {
     <div className="auth-page">
       <div className="auth-card">
         {/* Logo */}
-        <div className="auth-logo">₹ KhataBook</div>
+        <div className="auth-logo">₹ PEM</div>
         <div className="auth-tagline">Create your free account</div>
 
         <form onSubmit={handle}>

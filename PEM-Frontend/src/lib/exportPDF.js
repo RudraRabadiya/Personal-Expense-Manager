@@ -65,7 +65,7 @@ export function exportUserPDF(userData) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(20)
   doc.setTextColor(...C.text)
-  doc.text('KhataBook', 14, 16)
+  doc.text('PEM', 14, 16)
 
   doc.setFontSize(9)
   doc.setFont('helvetica', 'normal')
@@ -222,11 +222,11 @@ export function exportUserPDF(userData) {
     doc.setFontSize(7)
     doc.setFont('helvetica', 'normal')
     doc.setTextColor(...C.muted)
-    doc.text('KhataBook  ·  Confidential Admin Export', 14, 291)
+    doc.text('PEM  ·  Confidential Admin Export', 14, 291)
     doc.text(`Page ${i} of ${totalPages}`, pageW - 14, 291, { align: 'right' })
   }
 
   // ── Save ───────────────────────────────────────────────────────────────────
-  const filename = `${profile.name.replace(/\s+/g, '_')}_KhataBook_${new Date().toISOString().slice(0, 10)}.pdf`
+  const filename = `${profile.name.replace(/\s+/g, '_')}_PEM_${new Date().toISOString().slice(0, 10)}.pdf`
   doc.save(filename)
 }

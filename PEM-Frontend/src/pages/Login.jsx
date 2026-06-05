@@ -26,7 +26,7 @@ export default function Login() {
     <div className="auth-page">
       <div className="auth-card">
         {/* Logo */}
-        <div className="auth-logo">₹ KhataBook</div>
+        <div className="auth-logo">₹ PEM</div>
         <div className="auth-tagline">Your premium personal finance tracker</div>
 
         <form onSubmit={handle}>

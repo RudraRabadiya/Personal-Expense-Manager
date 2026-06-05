@@ -40,7 +40,7 @@ export default function Layout() {
       <aside className="sidebar">
         <div className="sidebar-logo">
           <span>₹</span>
-          <span>KhataBook</span>
+          <span>PEM</span>
         </div>
 
         <nav style={{ flex: 1 }}>
