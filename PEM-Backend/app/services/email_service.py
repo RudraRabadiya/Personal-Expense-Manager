@@ -1,7 +1,9 @@
-import resend
+import smtplib
+import ssl
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from app.config import settings
 
-resend.api_key = settings.RESEND_API_KEY
 
 def send_otp_email(to_email: str, name: str, otp_code: str):
     html = f"""
@@ -22,7 +24,7 @@ def send_otp_email(to_email: str, name: str, otp_code: str):
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <span style="font-size:22px;font-weight:800;color:#22c55e;letter-spacing:-0.5px;">₹ PEM</span>
+                        <span style="font-size:22px;font-weight:800;color:#22c55e;letter-spacing:-0.5px;">&#8377; PEM</span>
                         <span style="font-size:12px;color:#666;margin-left:8px;">Personal Expense Manager</span>
                       </td>
                     </tr>
@@ -33,10 +35,10 @@ def send_otp_email(to_email: str, name: str, otp_code: str):
               <tr>
                 <td style="padding:40px;">
                   <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#f0f0f0;">
-                    Verify your email 👋
+                    Verify your email &#128075;
                   </p>
                   <p style="margin:0 0 28px;font-size:14px;color:#888;line-height:1.6;">
-                    Hi <strong style="color:#ccc;">{name}</strong>, use the code below to complete your registration.
+                    Hi <strong style="color:#ccc;">{name}</strong>, use the code below to complete your PEM registration.
                     This code expires in <strong style="color:#ccc;">5 minutes</strong>.
                   </p>
 
@@ -57,7 +59,7 @@ def send_otp_email(to_email: str, name: str, otp_code: str):
               <tr>
                 <td style="padding:20px 40px;border-top:1px solid #2a2a2a;background:#111;">
                   <p style="margin:0;font-size:12px;color:#444;text-align:center;">
-                    Made by <strong style="color:#555;">Rudra J Rabadiya</strong> &nbsp;·&nbsp; © All Rights Reserved
+                    Made by <strong style="color:#555;">Rudra J Rabadiya</strong> &nbsp;&middot;&nbsp; &#169; All Rights Reserved
                   </p>
                 </td>
               </tr>
@@ -69,10 +71,18 @@ def send_otp_email(to_email: str, name: str, otp_code: str):
     </html>
     """
 
-    params = resend.Emails.SendParams(
-        from_="PEM <onboarding@resend.dev>",
-        to=[to_email],
-        subject="Your PEM verification code",
-        html=html,
-    )
-    resend.Emails.send(params)
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = "Your PEM verification code"
+    msg["From"]    = f"PEM <{settings.GMAIL_USER}>"
+    msg["To"]      = to_email
+    msg.attach(MIMEText(html, "html"))
+
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.ehlo()
+            server.starttls(context=context)
+            server.login(settings.GMAIL_USER, settings.GMAIL_APP_PASSWORD)
+            server.sendmail(settings.GMAIL_USER, to_email, msg.as_string())
+    except Exception as e:
+        raise Exception(f"Gmail SMTP error: {str(e)}")

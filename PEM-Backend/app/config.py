@@ -5,7 +5,8 @@ class Settings(BaseSettings):
     SUPABASE_SERVICE_KEY: str
     SUPABASE_JWT_SECRET: str
     ALLOWED_ORIGINS: str = "http://localhost:5173"
-    RESEND_API_KEY: str = ""
+    GMAIL_USER: str = ""
+    GMAIL_APP_PASSWORD: str = ""
 
     @property
     def origins_list(self):
