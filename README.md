@@ -252,9 +252,9 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-Made with ❤️ by **[Rudra J Rabadiya](https://github.com/Rudra-7127)**
+Made by **[Rudra J Rabadiya](https://github.com/Rudra-7127)**
 
-[![Instagram](https://img.shields.io/badge/@rudra.raabdiya.07-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/rudra.raabdiya.07)
+[![Instagram](https://img.shields.io/badge/%40rudra.rabadiya.07-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/rudra.rabadiya.07/)
 
 © 2026 · All Rights Reserved
 
