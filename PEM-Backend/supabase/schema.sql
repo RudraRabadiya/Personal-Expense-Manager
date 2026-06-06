@@ -1,8 +1,5 @@
--- ─────────────────────────────────────────
--- KhataBook – Supabase Schema
--- Run this in Supabase SQL Editor
--- ─────────────────────────────────────────
 
+-- PEM – Supabase Schema
 -- 1. PROFILES (extends Supabase auth.users)
 create table if not exists public.profiles (
   id uuid references auth.users(id) on delete cascade primary key,
@@ -12,7 +9,7 @@ create table if not exists public.profiles (
   created_at timestamptz default now()
 );
 
--- Auto-create profile on signup
+-- Auto-create profile on signup(NAVO USER)
 create or replace function public.handle_new_user()
 returns trigger as $$
 begin
@@ -32,7 +29,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
--- 2. ENTRIES (expense / income)
+-- 2. ENTRIES (expense / income)(MAIN KHATUU)
 create table if not exists public.entries (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references public.profiles(id) on delete cascade not null,
@@ -45,7 +42,7 @@ create table if not exists public.entries (
   created_at timestamptz default now()
 );
 
--- 3. UDHAR (lending / borrowing)
+-- 3. UDHAR (lending / borrowing)(other khatuu)
 create table if not exists public.udhar (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references public.profiles(id) on delete cascade not null,
