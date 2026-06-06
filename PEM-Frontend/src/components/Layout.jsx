@@ -41,8 +41,7 @@ export default function Layout() {
       {/* ── Sidebar ── */}
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <span>₹</span>
-          <span>PEM</span>
+          <img src="/logo.png" alt="PEM Logo" style={{ height: 40, width: 'auto', objectFit: 'contain' }} />
         </div>
 
         <nav style={{ flex: 1 }}>
@@ -91,6 +90,20 @@ export default function Layout() {
           <button className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: 8 }} onClick={handleLogout}>
             ⏻ Logout
           </button>
+
+          {/* Creator credit */}
+          <div style={{
+            marginTop: 16,
+            paddingTop: 12,
+            borderTop: '1px solid var(--border)',
+            textAlign: 'center',
+            fontSize: '0.7rem',
+            color: 'var(--muted)',
+            lineHeight: 1.4,
+          }}>
+            Made with <span style={{ color: '#e05a6e' }}>♥</span> by<br />
+            <span style={{ fontWeight: 600, color: 'var(--text)', opacity: 0.7 }}>Rudra J Rabadiya</span>
+          </div>
         </div>
       </aside>
 
