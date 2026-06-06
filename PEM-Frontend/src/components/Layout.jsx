@@ -5,19 +5,19 @@ import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
 const userNav = [
-  { to: '/dashboard',   icon: '▦',  label: 'Dashboard'   },
-  { to: '/expenses',    icon: '↓',  label: LABELS.expense },
-  { to: '/income',      icon: '↑',  label: LABELS.income  },
-  { to: '/udhar',       icon: '⇌',  label: 'Udhar Book'  },
-  { to: '/all-entries', icon: '☰',  label: 'All Entries' },
-  { to: '/reports',     icon: '↗',  label: 'Reports'     },
+  { to: '/dashboard', icon: '▦', label: 'Dashboard' },
+  { to: '/expenses', icon: '↓', label: LABELS.expense },
+  { to: '/income', icon: '↑', label: LABELS.income },
+  { to: '/udhar', icon: '⇌', label: 'Udhar Book' },
+  { to: '/all-entries', icon: '☰', label: 'All Entries' },
+  { to: '/reports', icon: '↗', label: 'Reports' },
 ]
 const adminNav = [
-  { to: '/dashboard',   icon: '▦',  label: 'Dashboard'   },
-  { to: '/admin',       icon: '◎',  label: 'All Users'   },
-  { to: '/udhar',       icon: '⇌',  label: 'Udhar Book'  },
-  { to: '/all-entries', icon: '☰',  label: 'All Entries' },
-  { to: '/reports',     icon: '↗',  label: 'My Reports'  },
+  { to: '/dashboard', icon: '▦', label: 'Dashboard' },
+  { to: '/admin', icon: '◎', label: 'All Users' },
+  { to: '/udhar', icon: '⇌', label: 'Udhar Book' },
+  { to: '/all-entries', icon: '☰', label: 'All Entries' },
+  { to: '/reports', icon: '↗', label: 'My Reports' },
 ]
 
 function getInitials(name = '') {
@@ -101,8 +101,8 @@ export default function Layout() {
             color: 'var(--muted)',
             lineHeight: 1.4,
           }}>
-            Made with <span style={{ color: '#e05a6e' }}>♥</span> by<br />
-            <span style={{ fontWeight: 600, color: 'var(--text)', opacity: 0.7 }}>Rudra J Rabadiya</span>
+            <span style={{ fontWeight: 600, color: 'var(--text)', opacity: 0.8 }}>Made by Rudra J Rabadiya</span><br />
+            <span>© All Rights Reserved</span>
           </div>
         </div>
       </aside>
