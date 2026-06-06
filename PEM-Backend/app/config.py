@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     SUPABASE_SERVICE_KEY: str
     SUPABASE_JWT_SECRET: str
     ALLOWED_ORIGINS: str = "http://localhost:5173"
+    RESEND_API_KEY: str = ""
 
     @property
     def origins_list(self):

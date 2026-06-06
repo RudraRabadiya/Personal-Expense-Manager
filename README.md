@@ -203,4 +203,6 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 <div align="center">
   Made with ♥ by <strong>Rudra J Rabadiya</strong>
+  <strong> 2026.© All Rights Reserved</strong>
+
 </div>

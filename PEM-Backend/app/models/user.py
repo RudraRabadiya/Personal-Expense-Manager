@@ -9,6 +9,10 @@ class LoginRequest(BaseModel):
     email: EmailStr
     password: str
 
+class OtpVerifyRequest(BaseModel):
+    user_id: str
+    code: str
+
 class UpdateProfileRequest(BaseModel):
     name: str
 

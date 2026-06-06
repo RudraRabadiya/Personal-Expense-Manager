@@ -26,8 +26,22 @@ export function AuthProvider({ children }) {
     return res.data.user
   }
 
+  // Step 1: Create account → returns { user_id, otp_sent }
   const register = async (name, email, password) => {
-    await api.post('/auth/register', { name, email, password })
+    const res = await api.post('/auth/register', { name, email, password })
+    return res.data
+  }
+
+  // Step 2: Verify OTP → account verified, redirect to login
+  const verifyRegistration = async (user_id, code) => {
+    const res = await api.post('/auth/verify-registration', { user_id, code })
+    return res.data
+  }
+
+  // Resend OTP
+  const resendOtp = async (user_id) => {
+    const res = await api.post('/auth/resend-otp', { user_id })
+    return res.data
   }
 
   const logout = () => {
@@ -42,7 +56,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register, verifyRegistration, resendOtp, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   )
