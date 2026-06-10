@@ -93,7 +93,6 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      {/* ── Header ── */}
       <div className="page-header fade-up">
         <div>
           <div className="page-title">👑 Admin Dashboard</div>
@@ -104,7 +103,6 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      {/* ── Stat Cards ── */}
       <div className="stat-grid fade-up fade-up-1">
         <div className="stat-card accent">
           <div className="stat-label">Total Users</div>
@@ -128,12 +126,10 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* ── Users Table ── */}
       <div className="card fade-up fade-up-2">
         <div className="card-header">
           <div className="card-title">👥 All Users</div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            {/* Role filter tabs */}
             <div className="tab-group">
               {[['all', 'All'], ['user', 'Users'], ['admin', 'Admins']].map(([v, l]) => (
                 <button key={v} className={`tab-btn ${roleFilter === v ? 'active' : ''}`} onClick={() => setRoleFilter(v)}>{l}</button>
@@ -167,7 +163,6 @@ export default function AdminDashboard() {
               const busy = actionLoading[u.id]
               return (
                 <tr key={u.id}>
-                  {/* Name */}
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{
@@ -185,42 +180,34 @@ export default function AdminDashboard() {
                     </div>
                   </td>
 
-                  {/* Email */}
                   <td style={{ color: 'var(--muted)', fontSize: '0.82rem' }}>{u.email}</td>
 
-                  {/* Role chip */}
                   <td>
                     <span className={`chip ${u.role === 'admin' ? 'chip-expense' : 'chip-income'}`}>
                       {u.role === 'admin' ? '👑 Admin' : '· User'}
                     </span>
                   </td>
 
-                  {/* Entries */}
                   <td style={{ textAlign: 'right' }}>
                     <span className="amount" style={{ color: 'var(--text-dim)' }}>{u.total_entries}</span>
                   </td>
 
-                  {/* Udhar Pending */}
                   <td style={{ textAlign: 'right' }}>
                     <span className="amount" style={{ color: u.udhar_pending > 0 ? 'var(--yellow)' : 'var(--muted)' }}>
                       {u.udhar_pending > 0 ? `₹${fmt(u.udhar_pending)}` : '—'}
                     </span>
                   </td>
 
-                  {/* Last Active */}
                   <td style={{ color: 'var(--muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
                     {timeAgo(u.last_active)}
                   </td>
 
-                  {/* Joined */}
                   <td style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap' }}>
                     {fmtDate(u.created_at?.slice(0, 10))}
                   </td>
 
-                  {/* Actions */}
                   <td>
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'nowrap' }}>
-                      {/* View detail */}
                       <button
                         className="btn btn-secondary btn-sm"
                         onClick={() => navigate(`/admin/users/${u.id}`)}
@@ -229,7 +216,6 @@ export default function AdminDashboard() {
                         View →
                       </button>
 
-                      {/* Promote / Demote */}
                       {u.role === 'user' ? (
                         <button
                           className="btn btn-sm"
@@ -252,7 +238,6 @@ export default function AdminDashboard() {
                         </button>
                       )}
 
-                      {/* Export PDF */}
                       <button
                         className="btn btn-sm"
                         style={{ background: 'var(--red-dim)', border: '1px solid #f43f5e30', color: '#f43f5e' }}
@@ -263,7 +248,6 @@ export default function AdminDashboard() {
                         {pdfLoading[u.id] ? '…' : '↓ PDF'}
                       </button>
 
-                      {/* Delete */}
                       <button
                         className="btn btn-danger btn-icon"
                         disabled={!!busy}

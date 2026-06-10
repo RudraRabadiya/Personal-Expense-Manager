@@ -3,18 +3,14 @@ import api from '../lib/api'
 import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
-// FastAPI validation errors return detail as an array of objects
+
 const parseApiError = (err) => {
   const detail = err?.response?.data?.detail
   if (Array.isArray(detail)) return detail.map(d => d.msg || String(d)).join(', ')
   return typeof detail === 'string' ? detail : 'Something went wrong'
 }
 
-/**
- * AddUdharModal — handles both Add and Edit modes.
- * Pass `udhar` prop to enter edit mode (pre-fills form, calls PUT).
- * Leave `udhar` undefined to create a new entry (calls POST).
- */
+
 export default function AddUdharModal({ udhar = null, onClose, onSuccess }) {
   const isEdit = !!udhar
   const [type, setType] = useState(isEdit ? udhar.type : 'gave')
@@ -43,7 +39,7 @@ export default function AddUdharModal({ udhar = null, onClose, onSuccess }) {
     setLoading(true)
     try {
       if (isEdit) {
-        // PUT only accepts UdharUpdate fields — do NOT send `type`
+
         const updatePayload = {
           person_name: payload.person_name,
           amount:      payload.amount,
@@ -69,7 +65,6 @@ export default function AddUdharModal({ udhar = null, onClose, onSuccess }) {
       <div className="modal">
         <div className="modal-title">{isEdit ? '✏️ Edit Udhar Entry' : 'Add Udhar Entry'}</div>
 
-        {/* Type toggle — disabled in edit mode */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 18 }}>
           {[
             ['gave', LABELS.gave,  'var(--blue)',   '#3b82f618'],

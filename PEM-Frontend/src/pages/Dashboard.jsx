@@ -88,7 +88,6 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* ── Overdue Udhar Alert ── */}
       {urgentCount > 0 && (
         <div style={{
           background: overdueUdhar.length > 0 ? 'linear-gradient(135deg,#f43f5e18,#f43f5e06)' : 'linear-gradient(135deg,#f59e0b18,#f59e0b06)',
@@ -111,7 +110,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* ── Greeting ── */}
       <div className="greeting fade-up">
         <div className="greeting-text">
           {getGreeting()}, {user?.name?.split(' ')[0]} 👋

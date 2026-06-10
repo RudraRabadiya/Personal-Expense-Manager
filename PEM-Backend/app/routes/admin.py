@@ -7,14 +7,14 @@ from datetime import datetime, timezone
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
 
-# ── GET /admin/users ──────────────────────────────────────────────────────────
+
 @router.get("/users")
 def get_all_users(_=Depends(require_admin)):
     res = supabase.table("profiles").select("id, name, email, role, created_at").order("created_at").execute()
     return res.data
 
 
-# ── GET /admin/dashboard ──────────────────────────────────────────────────────
+
 @router.get("/dashboard")
 def admin_dashboard(_=Depends(require_admin)):
     users   = supabase.table("profiles").select("id, name, email, role, created_at").execute()
@@ -25,7 +25,7 @@ def admin_dashboard(_=Depends(require_admin)):
     all_entries = entries.data or []
     all_udhar   = udhar.data   or []
 
-    # ── Platform-wide stats ────────────────────────────────────────────
+
     total_users = len(all_users)
     total_entries = len(all_entries)
 
@@ -40,7 +40,7 @@ def admin_dashboard(_=Depends(require_admin)):
         x["user_id"] for x in all_udhar if x["status"] != "paid"
     ))
 
-    # ── Per-user enrichment ────────────────────────────────────────────
+
     from collections import defaultdict
 
     entry_counts  = defaultdict(int)
@@ -77,7 +77,7 @@ def admin_dashboard(_=Depends(require_admin)):
     }
 
 
-# ── GET /admin/users/{user_id}/full ──────────────────────────────────────────
+
 @router.get("/users/{user_id}/full")
 def get_user_full(user_id: str, _=Depends(require_admin)):
     profile = supabase.table("profiles").select("*").eq("id", user_id).single().execute()
@@ -113,9 +113,9 @@ def get_user_full(user_id: str, _=Depends(require_admin)):
     }
 
 
-# ── PATCH /admin/users/{user_id}/role ─────────────────────────────────────────
+
 class RoleUpdate(BaseModel):
-    role: str  # "admin" | "user"
+    role: str
 
 @router.patch("/users/{user_id}/role")
 def update_user_role(user_id: str, body: RoleUpdate, _=Depends(require_admin)):
@@ -125,9 +125,9 @@ def update_user_role(user_id: str, body: RoleUpdate, _=Depends(require_admin)):
     return {"message": f"Role updated to {body.role}"}
 
 
-# ── DELETE /admin/users/{user_id} ─────────────────────────────────────────────
+
 @router.delete("/users/{user_id}")
 def delete_user(user_id: str, _=Depends(require_admin)):
-    # Delete from auth (cascades to profiles via FK)
+
     supabase.auth.admin.delete_user(user_id)
     return {"message": "User deleted"}

@@ -25,7 +25,6 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        {/* Logo */}
         <div className="auth-logo">₹ PEM</div>
         <div className="auth-tagline">Your premium personal finance tracker</div>
 

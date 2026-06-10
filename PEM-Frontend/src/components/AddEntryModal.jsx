@@ -3,7 +3,7 @@ import api from '../lib/api'
 import { LABELS } from '../lib/utils'
 import toast from 'react-hot-toast'
 
-// FastAPI validation errors return detail as an array of objects
+
 const parseApiError = (err) => {
   const detail = err?.response?.data?.detail
   if (Array.isArray(detail)) return detail.map(d => d.msg || String(d)).join(', ')
@@ -13,11 +13,7 @@ const parseApiError = (err) => {
 const EXPENSE_CATS = ['Food','Transport','Bills','Shopping','Health','Entertainment','Education','Other']
 const INCOME_CATS  = ['Salary','Freelance','Business','Investment','Gift','Other']
 
-/**
- * AddEntryModal — handles both Add and Edit modes.
- * Pass `entry` prop to enter edit mode (pre-fills form, calls PUT).
- * Leave `entry` undefined to create a new entry (calls POST).
- */
+
 export default function AddEntryModal({ type: defaultType = 'expense', entry = null, onClose, onSuccess }) {
   const isEdit = !!entry
   const [type, setType] = useState(isEdit ? entry.type : defaultType)
@@ -60,7 +56,6 @@ export default function AddEntryModal({ type: defaultType = 'expense', entry = n
       <div className="modal">
         <div className="modal-title">{isEdit ? '✏️ Edit Entry' : 'Add Entry'}</div>
 
-        {/* Type toggle — disabled in edit mode */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 18 }}>
           {[
             ['expense', LABELS.expense, 'var(--red)',   '#ef444418'],

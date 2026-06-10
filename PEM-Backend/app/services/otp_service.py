@@ -9,10 +9,10 @@ def generate_and_save_otp(user_id: str) -> str:
     code = ''.join(random.choices(string.digits, k=6))
     expires_at = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat()
 
-    # Delete any existing OTPs for this user first
+
     supabase.table("otp_codes").delete().eq("user_id", user_id).execute()
 
-    # Insert the new OTP
+
     supabase.table("otp_codes").insert({
         "user_id": user_id,
         "code": code,
@@ -37,10 +37,10 @@ def verify_otp(user_id: str, code: str) -> bool:
     expires_at = datetime.fromisoformat(record["expires_at"].replace("Z", "+00:00"))
 
     if datetime.now(timezone.utc) > expires_at:
-        # Expired — clean it up
+
         supabase.table("otp_codes").delete().eq("id", record["id"]).execute()
         return False
 
-    # Valid — delete it so it can't be reused
+
     supabase.table("otp_codes").delete().eq("id", record["id"]).execute()
     return True

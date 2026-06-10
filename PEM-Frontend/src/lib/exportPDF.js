@@ -4,21 +4,21 @@ import autoTable from 'jspdf-autotable'
 const fmt     = n => Number(n || 0).toLocaleString('en-IN')
 const fmtDate = d => d ? d.split('-').reverse().join('/') : '-'
 
-// ── Colour palette (matches Cyber Emerald CSS theme) ──────────────────────────
+
 const C = {
-  bg:      [10,  11,  14],   // #0a0b0e
-  surface: [18,  20,  26],   // #12141a
-  border:  [39,  43,  56],   // #272b38
-  accent:  [16,  185, 129],  // #10b981 emerald
-  green:   [163, 230, 53],   // #a3e635 lime
-  red:     [244, 63,  94],   // #f43f5e hot-pink
-  blue:    [14,  165, 233],  // #0ea5e9 sky
-  yellow:  [245, 158, 11],   // #f59e0b amber
-  muted:   [100, 116, 139],  // #64748b
-  text:    [226, 232, 240],  // #e2e8f0
+  bg:      [10,  11,  14],
+  surface: [18,  20,  26],
+  border:  [39,  43,  56],
+  accent:  [16,  185, 129],
+  green:   [163, 230, 53],
+  red:     [244, 63,  94],
+  blue:    [14,  165, 233],
+  yellow:  [245, 158, 11],
+  muted:   [100, 116, 139],
+  text:    [226, 232, 240],
 }
 
-// helper: draw a filled rounded-ish rect header band
+
 function sectionHeader(doc, y, label, color) {
   doc.setFillColor(...color)
   doc.roundedRect(14, y, 182, 7, 1, 1, 'F')
@@ -47,21 +47,21 @@ function statBox(doc, x, y, w, label, value, color) {
   doc.text(value, x + 4, y + 13)
 }
 
-// ── MAIN EXPORT FUNCTION ──────────────────────────────────────────────────────
+
 export function exportUserPDF(userData) {
   const { profile, summary, entries, udhar } = userData
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const pageW = doc.internal.pageSize.getWidth()
 
-  // ── Page background ────────────────────────────────────────────────────────
+
   doc.setFillColor(...C.bg)
   doc.rect(0, 0, pageW, 297, 'F')
 
-  // ── Top accent bar ─────────────────────────────────────────────────────────
+
   doc.setFillColor(...C.accent)
   doc.rect(0, 0, pageW, 2, 'F')
 
-  // ── Title block ────────────────────────────────────────────────────────────
+
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(20)
   doc.setTextColor(...C.text)
@@ -72,7 +72,7 @@ export function exportUserPDF(userData) {
   doc.setTextColor(...C.muted)
   doc.text('Personal Finance Tracker  ·  Admin Export', 14, 22)
 
-  // right-side user info
+
   doc.setFontSize(14)
   doc.setFont('helvetica', 'bold')
   doc.setTextColor(...C.accent)
@@ -84,12 +84,12 @@ export function exportUserPDF(userData) {
   doc.text(profile.email, pageW - 14, 19, { align: 'right' })
   doc.text(`Role: ${profile.role.toUpperCase()}   ·   Generated: ${new Date().toLocaleDateString('en-IN')}`, pageW - 14, 24, { align: 'right' })
 
-  // divider
+
   doc.setDrawColor(...C.border)
   doc.setLineWidth(0.4)
   doc.line(14, 28, pageW - 14, 28)
 
-  // ── Summary Stats ──────────────────────────────────────────────────────────
+
   let y = 33
   const boxW = 40
   const gap  = 3
@@ -103,7 +103,7 @@ export function exportUserPDF(userData) {
   boxes.forEach((b, i) => statBox(doc, 14 + i * (boxW + gap), y, boxW, b.label, b.value, b.color))
   y += 24
 
-  // ── Entries Table ──────────────────────────────────────────────────────────
+
   y = sectionHeader(doc, y, `Entries  (${entries.length})`, C.accent)
 
   autoTable(doc, {
@@ -153,8 +153,8 @@ export function exportUserPDF(userData) {
 
   y = doc.lastAutoTable.finalY + 8
 
-  // ── Udhar Table ────────────────────────────────────────────────────────────
-  // Add new page if not enough space
+
+
   if (y > 240) { doc.addPage(); doc.setFillColor(...C.bg); doc.rect(0, 0, pageW, 297, 'F'); y = 14 }
 
   y = sectionHeader(doc, y, `Udhar Book  (${udhar.length})`, C.blue)
@@ -210,7 +210,7 @@ export function exportUserPDF(userData) {
     },
   })
 
-  // ── Footer on every page ───────────────────────────────────────────────────
+
   const totalPages = doc.internal.getNumberOfPages()
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i)
@@ -226,7 +226,7 @@ export function exportUserPDF(userData) {
     doc.text(`Page ${i} of ${totalPages}`, pageW - 14, 291, { align: 'right' })
   }
 
-  // ── Save ───────────────────────────────────────────────────────────────────
+
   const filename = `${profile.name.replace(/\s+/g, '_')}_PEM_${new Date().toISOString().slice(0, 10)}.pdf`
   doc.save(filename)
 }

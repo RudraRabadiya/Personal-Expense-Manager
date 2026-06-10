@@ -31,7 +31,7 @@ def update_udhar(udhar_id: str, body: UdharUpdate, user=Depends(get_current_user
     existing = supabase.table("udhar").select("id").eq("id", udhar_id).eq("user_id", user["id"]).execute()
     if not existing.data:
         raise HTTPException(404, "Udhar entry not found or not yours")
-    # Only include fields that were explicitly set (not None)
+
     update_data = {k: v for k, v in body.model_dump().items() if v is not None}
     if "date" in update_data:
         update_data["date"] = str(update_data["date"])
@@ -64,7 +64,7 @@ def delete_udhar(udhar_id: str, user=Depends(get_current_user)):
     supabase.table("udhar").delete().eq("id", udhar_id).execute()
     return {"message": "Deleted successfully"}
 
-# ── Admin ──
+
 @router.get("/admin/{user_id}")
 def admin_get_user_udhar(user_id: str, _=Depends(require_admin)):
     res = supabase.table("udhar").select("*").eq("user_id", user_id).order("date", desc=True).execute()

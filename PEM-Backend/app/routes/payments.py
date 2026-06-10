@@ -33,7 +33,7 @@ def add_payment(udhar_id: str, body: PaymentCreate, user=Depends(get_current_use
     if body.amount <= 0:
         raise HTTPException(400, "Payment amount must be greater than 0")
 
-    # Check overpayment
+
     payments = supabase.table("udhar_payments").select("amount").eq("udhar_id", udhar_id).execute()
     already_paid = sum(p["amount"] for p in (payments.data or []))
     remaining = udhar["amount"] - already_paid

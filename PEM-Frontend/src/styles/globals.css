@@ -1,11 +1,9 @@
-/* ═══════════════════════════════════════════════
-   PEM — PREMIUM DARK FINTECH DESIGN SYSTEM
-   ═══════════════════════════════════════════════ */
 
-/* ── Google Fonts (Syne + DM Sans + DM Mono) ── */
+
+
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@400;500&display=swap');
 
-/* ── Design Tokens ── */
+
 :root {
   --bg: #0a0b0e;
   --surface: #12141a;
@@ -14,19 +12,19 @@
   --border-glow: #10b98130;
 
   --green: #a3e635;
-  /* Bright Lime for Income */
+
   --green-dim: #a3e63518;
   --red: #fa0101;
-  /* Hot Pink/Magenta for Expense */
+
   --red-dim: #f43f5e18;
   --blue: #0ea5e9;
-  /* Electric Blue for Udhar Gave */
+
   --blue-dim: #0ea5e918;
   --yellow: #f59e0b;
-  /* Amber for Udhar Got */
+
   --yellow-dim: #f59e0b18;
   --accent: #10b981;
-  /* Cyber Emerald */
+
   --accent2: #34d399;
   --accent-dim: #10b98118;
   --muted: #64748b;
@@ -50,7 +48,7 @@
   --shadow-red: 0 0 30px #f43f5e20;
 }
 
-/* ── Light Mode Overrides ── */
+
 [data-theme="light"] {
   --bg: #f0f4f8;
   --surface: #ffffff;
@@ -146,7 +144,7 @@
   background: #05966908;
 }
 
-/* ── Reset ── */
+
 *,
 *::before,
 *::after {
@@ -181,7 +179,7 @@ textarea {
   font-family: var(--font-body);
 }
 
-/* ── Scrollbar ── */
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -200,9 +198,7 @@ textarea {
   background: var(--muted);
 }
 
-/* ══════════════════════
-   ANIMATIONS
-══════════════════════ */
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -277,9 +273,7 @@ textarea {
   animation-delay: 0.25s;
 }
 
-/* ══════════════════════
-   GLASS CARDS
-══════════════════════ */
+
 .card {
   background: linear-gradient(135deg, #0d122080 0%, #111827aa 100%);
   backdrop-filter: blur(16px);
@@ -310,9 +304,7 @@ textarea {
   letter-spacing: -0.01em;
 }
 
-/* ══════════════════════
-   STAT CARDS
-══════════════════════ */
+
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -347,7 +339,7 @@ textarea {
   box-shadow: var(--shadow-md);
 }
 
-/* Colored top-border variants */
+
 .stat-card.green::before {
   background: linear-gradient(90deg, var(--green), #16a34a);
 }
@@ -396,9 +388,7 @@ textarea {
   margin-top: 5px;
 }
 
-/* ══════════════════════
-   TABLE
-══════════════════════ */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -443,9 +433,7 @@ tbody tr:hover td {
   font-weight: 500;
 }
 
-/* ══════════════════════
-   BUTTONS
-══════════════════════ */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -480,7 +468,7 @@ tbody tr:hover td {
   transform: scale(0.97);
 }
 
-/* Primary — orange glow */
+
 .btn-primary {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
   color: #fff;
@@ -499,7 +487,7 @@ tbody tr:hover td {
   box-shadow: none;
 }
 
-/* Secondary — ghost */
+
 .btn-secondary {
   background: transparent;
   border: 1px solid var(--border);
@@ -512,7 +500,7 @@ tbody tr:hover td {
   background: #ffffff08;
 }
 
-/* Danger — red tint */
+
 .btn-danger {
   background: var(--red-dim);
   border: 1px solid #ef444430;
@@ -527,7 +515,7 @@ tbody tr:hover td {
   box-shadow: 0 0 16px #ef444430;
 }
 
-/* Blue — pay */
+
 .btn-blue {
   background: var(--blue-dim);
   border: 1px solid #3b82f630;
@@ -563,9 +551,7 @@ tbody tr:hover td {
   line-height: 1;
 }
 
-/* ══════════════════════
-   CHIPS / PILLS
-══════════════════════ */
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -620,9 +606,7 @@ tbody tr:hover td {
   border: 1px solid #f9731628;
 }
 
-/* ══════════════════════
-   FORM FIELDS
-══════════════════════ */
+
 .field {
   margin-bottom: 18px;
 }
@@ -673,9 +657,7 @@ tbody tr:hover td {
   background: var(--surface2);
 }
 
-/* ══════════════════════
-   MODAL / OVERLAY
-══════════════════════ */
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -718,9 +700,7 @@ tbody tr:hover td {
   border-top: 1px solid var(--border);
 }
 
-/* ══════════════════════
-   PAGE HEADER
-══════════════════════ */
+
 .page-header {
   display: flex;
   align-items: center;
@@ -743,9 +723,7 @@ tbody tr:hover td {
   margin-top: 2px;
 }
 
-/* ══════════════════════
-   FILTER BAR
-══════════════════════ */
+
 .filter-bar {
   display: flex;
   align-items: center;
@@ -781,9 +759,7 @@ tbody tr:hover td {
   outline: none;
 }
 
-/* ══════════════════════
-   EMPTY STATE
-══════════════════════ */
+
 .empty {
   text-align: center;
   padding: 56px 20px;
@@ -797,9 +773,7 @@ tbody tr:hover td {
   opacity: 0.5;
 }
 
-/* ══════════════════════
-   LOADING
-══════════════════════ */
+
 .loading-wrap {
   display: flex;
   align-items: center;
@@ -818,9 +792,7 @@ tbody tr:hover td {
   animation: spin 0.7s linear infinite;
 }
 
-/* ══════════════════════
-   AUTH PAGE
-══════════════════════ */
+
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -875,9 +847,7 @@ tbody tr:hover td {
   color: var(--accent2);
 }
 
-/* ══════════════════════
-   SIDEBAR (Layout)
-══════════════════════ */
+
 .sidebar {
   width: 230px;
   min-width: 230px;
@@ -989,9 +959,7 @@ tbody tr:hover td {
   letter-spacing: 0.06em;
 }
 
-/* ══════════════════════
-   MAIN LAYOUT
-══════════════════════ */
+
 .layout-root {
   display: flex;
   min-height: 100vh;
@@ -1005,9 +973,7 @@ tbody tr:hover td {
   overflow-x: hidden;
 }
 
-/* ══════════════════════
-   PROGRESS BAR
-══════════════════════ */
+
 .progress-track {
   background: var(--border);
   border-radius: 100px;
@@ -1030,16 +996,12 @@ tbody tr:hover td {
   font-family: var(--font-mono);
 }
 
-/* ══════════════════════
-   CHART CONTAINER
-══════════════════════ */
+
 .chart-wrap {
   padding: 20px 8px 8px;
 }
 
-/* ══════════════════════
-   TOGGLE TABS
-══════════════════════ */
+
 .tab-group {
   display: flex;
   background: var(--surface2);
@@ -1068,9 +1030,7 @@ tbody tr:hover td {
   box-shadow: 0 2px 12px #f9731640;
 }
 
-/* ══════════════════════
-   GREETING / HERO
-══════════════════════ */
+
 .greeting {
   margin-bottom: 28px;
 }
@@ -1089,9 +1049,7 @@ tbody tr:hover td {
   margin-top: 4px;
 }
 
-/* ══════════════════════
-   SECTION SPACING
-══════════════════════ */
+
 .section {
   margin-bottom: 28px;
 }
@@ -1104,9 +1062,7 @@ tbody tr:hover td {
   letter-spacing: -0.01em;
 }
 
-/* ══════════════════════
-   UDHAR INFO BOX
-══════════════════════ */
+
 .info-box {
   background: var(--surface2);
   border: 1px solid var(--border);
@@ -1115,9 +1071,7 @@ tbody tr:hover td {
   margin-bottom: 20px;
 }
 
-/* ══════════════════════
-   RESPONSIVE
-══════════════════════ */
+
 @media (max-width: 900px) {
   .sidebar {
     width: 64px;

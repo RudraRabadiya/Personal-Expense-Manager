@@ -7,19 +7,19 @@ import calendar
 router = APIRouter(prefix="/reports", tags=["Reports"])
 
 def calc_monthly(entries, udhar, year, month):
-    # Opening balance = all income - expense BEFORE this month
+
     before = [e for e in entries if e["date"] < f"{year}-{month:02d}-01"]
     opening = sum(e["amount"] for e in before if e["type"]=="income") - \
               sum(e["amount"] for e in before if e["type"]=="expense")
 
-    # This month entries
+
     month_str = f"{year}-{month:02d}"
     this_month = [e for e in entries if e["date"].startswith(month_str)]
     aavak = sum(e["amount"] for e in this_month if e["type"]=="income")
     javak = sum(e["amount"] for e in this_month if e["type"]=="expense")
     closing = opening + aavak - javak
 
-    # Udhar pending as of end of this month
+
     last_day = f"{year}-{month:02d}-{calendar.monthrange(year, month)[1]}"
     udhar_gave_pending = sum(
         u["amount"] - (u.get("paid_amount") or 0)
@@ -50,13 +50,13 @@ def get_user_data(user_id):
     udhar = supabase.table("udhar").select("*").eq("user_id", user_id).order("date").execute().data or []
     return entries, udhar
 
-# ── User: Monthly Report ──
+
 @router.get("/monthly")
 def monthly_report(year: int = Query(...), month: int = Query(...), user=Depends(get_current_user)):
     entries, udhar = get_user_data(user["id"])
     return calc_monthly(entries, udhar, year, month)
 
-# ── User: Yearly Report ──
+
 @router.get("/yearly")
 def yearly_report(year: int = Query(...), user=Depends(get_current_user)):
     entries, udhar = get_user_data(user["id"])
@@ -75,7 +75,7 @@ def yearly_report(year: int = Query(...), user=Depends(get_current_user)):
         "closing_balance": months[-1]["closing_balance"]
     }
 
-# ── Admin: Monthly Report for any user ──
+
 @router.get("/admin/{user_id}/monthly")
 def admin_monthly(user_id: str, year: int = Query(...), month: int = Query(...), _=Depends(require_admin)):
     entries, udhar = get_user_data(user_id)
@@ -84,7 +84,7 @@ def admin_monthly(user_id: str, year: int = Query(...), month: int = Query(...),
     result["profile"] = profile
     return result
 
-# ── Admin: Yearly Report for any user ──
+
 @router.get("/admin/{user_id}/yearly")
 def admin_yearly(user_id: str, year: int = Query(...), _=Depends(require_admin)):
     entries, udhar = get_user_data(user_id)

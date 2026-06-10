@@ -5,7 +5,7 @@ import AddUdharModal from '../components/AddUdharModal'
 import PaymentModal from '../components/PaymentModal'
 import toast from 'react-hot-toast'
 
-// ── Due date helpers ─────────────────────────────────────────────────────────
+
 function getDueDays(due_date) {
   if (!due_date) return null
   const today = new Date(); today.setHours(0, 0, 0, 0)
@@ -51,7 +51,7 @@ export default function Udhar() {
   const pendingGot  = got.filter(u  => u.status !== 'paid').reduce((s, u) => s + (u.amount - (u.paid_amount || 0)), 0)
   const displayed   = udhar.filter(u => filter === 'all' || u.type === filter)
 
-  // Overdue count for banner
+
   const overdueCount = udhar.filter(u => u.status !== 'paid' && u.due_date && getDueDays(u.due_date) < 0).length
   const dueTodayCount = udhar.filter(u => u.status !== 'paid' && u.due_date && getDueDays(u.due_date) === 0).length
 
@@ -80,7 +80,6 @@ export default function Udhar() {
 
   return (
     <div>
-      {/* ── Overdue Alert Banner ── */}
       {(overdueCount > 0 || dueTodayCount > 0) && (
         <div style={{
           background: overdueCount > 0 ? 'linear-gradient(135deg, #f43f5e18, #f43f5e08)' : 'linear-gradient(135deg, #f59e0b18, #f59e0b08)',
@@ -102,7 +101,6 @@ export default function Udhar() {
         </div>
       )}
 
-      {/* ── Header ── */}
       <div className="page-header fade-up">
         <div>
           <div className="page-title">Udhar Book</div>
@@ -111,7 +109,6 @@ export default function Udhar() {
         <button className="btn btn-primary btn-sm" onClick={() => setShowModal(true)}>+ Add Udhar</button>
       </div>
 
-      {/* ── Stats ── */}
       <div className="stat-grid fade-up fade-up-1" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
         <div className="stat-card blue">
           <div className="stat-label">{LABELS.gave} (Baki)</div>
@@ -132,7 +129,6 @@ export default function Udhar() {
         </div>
       </div>
 
-      {/* ── Filter ── */}
       <div className="filter-bar fade-up fade-up-2">
         {[['all', 'All'], ['gave', LABELS.gave], ['got', LABELS.got]].map(([f, label]) => (
           <button key={f} className={`btn btn-sm ${filter === f ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setFilter(f)}>
@@ -141,7 +137,6 @@ export default function Udhar() {
         ))}
       </div>
 
-      {/* ── Table ── */}
       <div className="card fade-up fade-up-3">
         {displayed.length ? (
           <table>

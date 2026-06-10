@@ -103,7 +103,6 @@ export default function AllEntries() {
 
   return (
     <div>
-      {/* ── Header ── */}
       <div className="page-header fade-up">
         <div>
           <div className="page-title">All Entries</div>
@@ -127,7 +126,6 @@ export default function AllEntries() {
         </div>
       </div>
 
-      {/* ── Filters ── */}
       <div className="filter-bar fade-up fade-up-1">
         {filters.map(([f, label]) => (
           <button
@@ -147,7 +145,6 @@ export default function AllEntries() {
         />
       </div>
 
-      {/* ── Table ── */}
       <div className="card fade-up fade-up-2">
         {filtered.length ? (
           <table>

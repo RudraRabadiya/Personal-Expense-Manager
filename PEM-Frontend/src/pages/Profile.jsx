@@ -10,11 +10,11 @@ function getInitials(name = '') {
 export default function Profile() {
   const { user, refreshUser } = useAuth()
 
-  // ── Name form state ──
+
   const [name, setName]           = useState(user?.name || '')
   const [savingName, setSavingName] = useState(false)
 
-  // ── Password form state ──
+
   const [newPw, setNewPw]         = useState('')
   const [confirmPw, setConfirmPw] = useState('')
   const [showPw, setShowPw]       = useState(false)
@@ -56,7 +56,6 @@ export default function Profile() {
 
   return (
     <div>
-      {/* ── Header ── */}
       <div className="page-header fade-up">
         <div>
           <div className="page-title">My Profile</div>
@@ -64,7 +63,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* ── Avatar Card ── */}
       <div className="card fade-up fade-up-1" style={{ marginBottom: 24 }}>
         <div style={{ padding: '28px 28px', display: 'flex', alignItems: 'center', gap: 24 }}>
           <div style={{
@@ -101,7 +99,6 @@ export default function Profile() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
 
-        {/* ── Update Name ── */}
         <div className="card fade-up fade-up-2">
           <div className="card-header">
             <div className="card-title">✏️ Update Name</div>
@@ -141,7 +138,6 @@ export default function Profile() {
           </form>
         </div>
 
-        {/* ── Change Password ── */}
         <div className="card fade-up fade-up-3">
           <div className="card-header">
             <div className="card-title">🔒 Change Password</div>
@@ -183,7 +179,6 @@ export default function Profile() {
                 placeholder="Re-enter new password"
                 autoComplete="new-password"
               />
-              {/* Match indicator */}
               {confirmPw && (
                 <div style={{
                   marginTop: 6, fontSize: '0.75rem', fontWeight: 600,
@@ -208,7 +203,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* ── Account Info ── */}
       <div className="card fade-up fade-up-4" style={{ marginTop: 20 }}>
         <div className="card-header">
           <div className="card-title">ℹ️ Account Info</div>

@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import date
 
 class EntryCreate(BaseModel):
-    type: str           # 'expense' | 'income'
+    type: str
     amount: float
     description: str
     category: Optional[str] = "General"

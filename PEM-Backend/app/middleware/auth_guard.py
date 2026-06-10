@@ -6,8 +6,8 @@ bearer = HTTPBearer()
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer)):
     token = credentials.credentials
-    
-    # Use Supabase to verify the token instead of doing it manually
+
+
     try:
         user_resp = supabase.auth.get_user(token)
         if not user_resp or not user_resp.user:

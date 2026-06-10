@@ -36,7 +36,7 @@ def delete_entry(entry_id: str, user=Depends(get_current_user)):
     supabase.table("entries").delete().eq("id", entry_id).execute()
     return {"message": "Deleted successfully"}
 
-# ── Admin: get any user's entries ──
+
 @router.get("/admin/{user_id}")
 def admin_get_user_entries(user_id: str, _=Depends(require_admin)):
     res = supabase.table("entries").select("*").eq("user_id", user_id).order("date", desc=True).execute()

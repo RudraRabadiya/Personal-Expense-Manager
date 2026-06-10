@@ -34,7 +34,6 @@ export default function Reports() {
 
   return (
     <div>
-      {/* ── Header ── */}
       <div className="page-header fade-up">
         <div>
           <div className="page-title">Reports</div>
@@ -59,7 +58,6 @@ export default function Reports() {
         )}
       </div>
 
-      {/* ── Controls ── */}
       <div className="filter-bar fade-up fade-up-1" style={{ marginBottom: 28 }}>
         <div className="tab-group">
           {[['monthly', '📅 Monthly'], ['yearly', '📊 Yearly']].map(([v, label]) => (
@@ -102,7 +100,6 @@ function MonthlyView({ data }) {
         {data.month_name} {data.year}
       </div>
 
-      {/* Balance Flow */}
       <div className="stat-grid fade-up" style={{ marginBottom: 24 }}>
         <div className={`stat-card ${data.opening_balance >= 0 ? 'green' : 'red'}`}>
           <div className="stat-label">Opening Balance</div>
@@ -128,7 +125,6 @@ function MonthlyView({ data }) {
         </div>
       </div>
 
-      {/* Udhar Summary */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 24 }}>
         <div className="stat-card blue fade-up fade-up-1">
           <div className="stat-label">{LABELS.gave} Pending</div>
@@ -142,7 +138,6 @@ function MonthlyView({ data }) {
         </div>
       </div>
 
-      {/* Entries this month */}
       <div className="card fade-up fade-up-2" style={{ marginBottom: 16 }}>
         <div className="card-header">
           <div className="card-title">Entries this month ({data.entries.length})</div>
@@ -174,7 +169,6 @@ function MonthlyView({ data }) {
         ) : <div className="empty"><div className="empty-icon">📭</div>No entries this month</div>}
       </div>
 
-      {/* Udhar this month */}
       <div className="card fade-up fade-up-3">
         <div className="card-header">
           <div className="card-title">Udhar this month ({data.udhar_this_month.length})</div>
@@ -211,7 +205,6 @@ function YearlyView({ data }) {
         Year {data.year} Summary
       </div>
 
-      {/* Year totals */}
       <div className="stat-grid fade-up" style={{ marginBottom: 24 }}>
         <div className={`stat-card ${data.opening_balance >= 0 ? 'green' : 'red'}`}>
           <div className="stat-label">Opening Balance</div>
@@ -237,7 +230,6 @@ function YearlyView({ data }) {
         </div>
       </div>
 
-      {/* Month by month */}
       <div className="card fade-up fade-up-1">
         <div className="card-header">
           <div className="card-title">Month by Month</div>
@@ -266,7 +258,6 @@ function YearlyView({ data }) {
                 <td><span className="amount" style={{ color: 'var(--yellow)' }}>₹{fmt(m.udhar_got_pending)}</span></td>
               </tr>
             ))}
-            {/* Total row */}
             <tr style={{ borderTop: '2px solid var(--border)', background: '#f9731608', fontWeight: 700 }}>
               <td style={{ fontFamily: 'var(--font-display)', fontWeight: 800 }}>Total</td>
               <td><span className="amount" style={{ color: 'var(--muted)' }}>—</span></td>

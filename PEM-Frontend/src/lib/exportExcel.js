@@ -3,16 +3,11 @@ import * as XLSX from 'xlsx'
 const fmt     = n => Number(n || 0).toLocaleString('en-IN')
 const fmtDate = d => (d ? d.split('-').reverse().join('/') : '-')
 
-/**
- * Export entries and udhar data to an Excel file.
- * @param {Array}  entries  - Array of entry objects
- * @param {Array}  udhar    - Array of udhar objects
- * @param {string} filename - Optional custom filename (without extension)
- */
+
 export function exportExcel(entries = [], udhar = [], filename = null) {
   const wb = XLSX.utils.book_new()
 
-  // ── Sheet 1: Entries ────────────────────────────────────────────────────────
+
   const totalIncome  = entries.filter(e => e.type === 'income').reduce((s, e) => s + e.amount, 0)
   const totalExpense = entries.filter(e => e.type === 'expense').reduce((s, e) => s + e.amount, 0)
   const netBalance   = totalIncome - totalExpense
@@ -41,14 +36,14 @@ export function exportExcel(entries = [], udhar = [], filename = null) {
 
   const wsEntries = XLSX.utils.aoa_to_sheet([...entrySummary, ...entryRows])
 
-  // Column widths
+
   wsEntries['!cols'] = [
     { wch: 12 }, { wch: 10 }, { wch: 32 }, { wch: 18 }, { wch: 14 }, { wch: 20 },
   ]
 
   XLSX.utils.book_append_sheet(wb, wsEntries, 'Entries')
 
-  // ── Sheet 2: Udhar ──────────────────────────────────────────────────────────
+
   const totalGave    = udhar.filter(u => u.type === 'gave').reduce((s, u) => s + u.amount, 0)
   const totalGot     = udhar.filter(u => u.type === 'got').reduce((s, u) => s + u.amount, 0)
   const pendingGave  = udhar.filter(u => u.type === 'gave' && u.status !== 'paid').reduce((s, u) => s + (u.amount - (u.paid_amount || 0)), 0)
@@ -87,7 +82,7 @@ export function exportExcel(entries = [], udhar = [], filename = null) {
 
   XLSX.utils.book_append_sheet(wb, wsUdhar, 'Udhar')
 
-  // ── Save ────────────────────────────────────────────────────────────────────
+
   const name = filename || `PEM_Export_${new Date().toISOString().slice(0, 10)}`
   XLSX.writeFile(wb, `${name}.xlsx`)
 }

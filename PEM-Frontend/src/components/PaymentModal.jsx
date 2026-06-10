@@ -51,7 +51,6 @@ export default function PaymentModal({ udhar, onClose, onSuccess }) {
       <div className="modal" style={{width: 500}}>
         <div className="modal-title">💳 Part Payment</div>
 
-        {/* Udhar Info */}
         <div style={{background:'var(--surface2)',borderRadius:12,padding:'14px 16px',marginBottom:20}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:700}}>{udhar.person_name}</span>
@@ -61,14 +60,12 @@ export default function PaymentModal({ udhar, onClose, onSuccess }) {
             <span>Paid: <strong style={{color:'var(--green)'}}>₹{fmt(paidTotal)}</strong></span>
             <span>Remaining: <strong style={{color:'var(--red)'}}>₹{fmt(udhar.amount - paidTotal)}</strong></span>
           </div>
-          {/* Progress bar */}
           <div style={{background:'var(--border)',borderRadius:20,height:8,overflow:'hidden'}}>
             <div style={{width:`${pct}%`,height:'100%',background:`linear-gradient(90deg, var(--green), #16a34a)`,borderRadius:20,transition:'width .4s'}}></div>
           </div>
           <div style={{textAlign:'right',fontSize:'.75rem',color:'var(--muted)',marginTop:4}}>{pct}% paid</div>
         </div>
 
-        {/* Add Payment */}
         {udhar.status !== 'paid' && (
           <div style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'14px 16px',marginBottom:20}}>
             <div style={{fontWeight:700,marginBottom:12,fontSize:'.9rem'}}>Add Payment</div>
@@ -92,7 +89,6 @@ export default function PaymentModal({ udhar, onClose, onSuccess }) {
           </div>
         )}
 
-        {/* Payment History */}
         <div style={{fontWeight:700,marginBottom:10,fontSize:'.9rem'}}>Payment History</div>
         {payments.length ? (
           <div style={{display:'flex',flexDirection:'column',gap:8,maxHeight:200,overflowY:'auto'}}>

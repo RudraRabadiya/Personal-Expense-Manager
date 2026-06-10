@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import date
 
 class UdharCreate(BaseModel):
-    type: str           # 'gave' | 'got'
+    type: str
     person_name: str
     amount: float
     description: Optional[str] = ""

@@ -38,7 +38,6 @@ export default function Layout() {
 
   return (
     <div className="layout-root">
-      {/* ── Sidebar ── */}
       <aside className="sidebar">
         <div className="sidebar-logo">
           <img src="/logo.png" alt="PEM Logo" style={{ height: 40, width: 'auto', objectFit: 'contain' }} />
@@ -59,7 +58,6 @@ export default function Layout() {
         </nav>
 
         <div className="sidebar-footer">
-          {/* Theme Toggle */}
           <button
             id="theme-toggle-btn"
             className="btn btn-secondary btn-sm"
@@ -71,7 +69,6 @@ export default function Layout() {
             <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
 
-          {/* Profile link */}
           <NavLink
             to="/profile"
             className={({ isActive }) =>
@@ -91,7 +88,6 @@ export default function Layout() {
             ⏻ Logout
           </button>
 
-          {/* Creator credit */}
           <div style={{
             marginTop: 16,
             paddingTop: 12,
@@ -107,7 +103,6 @@ export default function Layout() {
         </div>
       </aside>
 
-      {/* ── Main Content ── */}
       <main className="main-content">
         <Outlet />
       </main>

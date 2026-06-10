@@ -33,7 +33,6 @@ export default function Income() {
 
   return (
     <div>
-      {/* ── Header ── */}
       <div className="page-header fade-up">
         <div>
           <div className="page-title">{LABELS.income}</div>
@@ -44,7 +43,6 @@ export default function Income() {
         </button>
       </div>
 
-      {/* ── Stats ── */}
       <div className="stat-grid fade-up fade-up-1" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
         <div className="stat-card green">
           <div className="stat-label">Total {LABELS.income}</div>
@@ -63,7 +61,6 @@ export default function Income() {
         </div>
       </div>
 
-      {/* ── Table ── */}
       <div className="card fade-up fade-up-2">
         {entries.length ? (
           <table>
