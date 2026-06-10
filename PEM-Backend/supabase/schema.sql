@@ -62,6 +62,26 @@ alter table public.profiles enable row level security;
 alter table public.entries enable row level security;
 alter table public.udhar enable row level security;
 
+-- Helper function to check if the current user is an admin without recursion
+create or replace function public.is_admin()
+returns boolean as $$
+begin
+  return exists (
+    select 1 from public.profiles
+    where id = auth.uid() and role = 'admin'
+  );
+end;
+$$ language plpgsql security definer;
+
+-- Drop existing policies if they exist
+drop policy if exists "Users can view own profile" on public.profiles;
+drop policy if exists "Admins can view all profiles" on public.profiles;
+drop policy if exists "Users can update own profile" on public.profiles;
+drop policy if exists "Users manage own entries" on public.entries;
+drop policy if exists "Admins view all entries" on public.entries;
+drop policy if exists "Users manage own udhar" on public.udhar;
+drop policy if exists "Admins view all udhar" on public.udhar;
+
 -- Profiles: users see own, admins see all
 create policy "Users can view own profile"
   on public.profiles for select
@@ -69,9 +89,7 @@ create policy "Users can view own profile"
 
 create policy "Admins can view all profiles"
   on public.profiles for select
-  using (
-    exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
-  );
+  using (public.is_admin());
 
 create policy "Users can update own profile"
   on public.profiles for update
@@ -84,9 +102,7 @@ create policy "Users manage own entries"
 
 create policy "Admins view all entries"
   on public.entries for select
-  using (
-    exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
-  );
+  using (public.is_admin());
 
 -- Udhar: users see own, admins see all
 create policy "Users manage own udhar"
@@ -95,9 +111,7 @@ create policy "Users manage own udhar"
 
 create policy "Admins view all udhar"
   on public.udhar for select
-  using (
-    exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
-  );
+  using (public.is_admin());
 
 -- ─── INDEXES ───
 create index if not exists idx_entries_user_id on public.entries(user_id);

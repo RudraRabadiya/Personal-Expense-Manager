@@ -108,6 +108,7 @@ Personal Expense Manager/
 │   │   └── styles/                    # Global CSS
 │   ├── index.html
 │   ├── vite.config.js
+│   ├── vercel.json                # Vercel routing configuration for SPA
 │   └── package.json
 │
 └── ⚙️  PEM-Backend/                   # FastAPI backend
@@ -301,6 +302,8 @@ npm run dev
 2. **Build Command:** `npm run build`
 3. **Output Directory:** `dist`
 4. Add all `VITE_*` variables in the platform's environment settings
+
+> 💡 **Note on Routing:** A `vercel.json` file is pre-configured in the frontend root to handle Single Page Application (SPA) routing. This automatically prevents 404 errors when reloading pages or navigating directly to URLs like `/login`.
 
 > ⚠️ After deploying the backend, update `VITE_API_URL` in the frontend env to your Render service URL, and update `ALLOWED_ORIGINS` in the backend env to your Vercel/Netlify URL.
 
