@@ -11,8 +11,9 @@ class EntryCreate(BaseModel):
     notes: Optional[str] = ""
 
 class EntryUpdate(BaseModel):
-    amount: Optional[float] = None
-    description: Optional[str] = None
-    category: Optional[str] = None
-    date: Optional[date] = None
-    notes: Optional[str] = None
+    amount: float
+    description: str
+    category: Optional[str] = "General"
+    date: date
+    notes: Optional[str] = ""
+

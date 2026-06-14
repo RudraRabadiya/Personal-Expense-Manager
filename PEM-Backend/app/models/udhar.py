@@ -12,10 +12,9 @@ class UdharCreate(BaseModel):
     notes: Optional[str] = ""
 
 class UdharUpdate(BaseModel):
-    person_name: Optional[str] = None
-    amount: Optional[float] = None
-    description: Optional[str] = None
-    date: Optional[date] = None
-    due_date: Optional[date] = None
-    notes: Optional[str] = None
-
+        person_name: str
+        amount: float
+        description: Optional[str] = ""
+        date: date
+        due_date: Optional[date] = None
+        notes: Optional[str] = ""
