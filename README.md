@@ -12,7 +12,7 @@
 
 **Created by [Rudra J Rabadiya](https://github.com/Rudra-7127)**
 
-🌐 **Live Demo:** [personal-expense-manager-gules.vercel.app](https://personal-expense-manager-gules.vercel.app)
+🌐 **Live Demo:** [https://personalexpensemanager.dpdns.org](https://personalexpensemanager.dpdns.org)
 
 </div>
 
