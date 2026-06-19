@@ -8,11 +8,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem('kb_token')
+    const token = localStorage.getItem('pem_token')
     if (token) {
       api.get('/auth/me')
         .then(r => setUser(r.data))
-        .catch(() => localStorage.removeItem('kb_token'))
+        .catch(() => localStorage.removeItem('pem_token'))
         .finally(() => setLoading(false))
     } else {
       setLoading(false)
@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password })
-    localStorage.setItem('kb_token', res.data.access_token)
+    localStorage.setItem('pem_token', res.data.access_token)
     setUser(res.data.user)
     return res.data.user
   }
@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
   }
 
   const logout = () => {
-    localStorage.removeItem('kb_token')
+    localStorage.removeItem('pem_token')
     setUser(null)
   }
 

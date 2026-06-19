@@ -118,16 +118,24 @@ class RoleUpdate(BaseModel):
     role: str
 
 @router.patch("/users/{user_id}/role")
-def update_user_role(user_id: str, body: RoleUpdate, _=Depends(require_admin)):
+def update_user_role(user_id: str, body: RoleUpdate, admin=Depends(require_admin)):
     if body.role not in ("admin", "user"):
         raise HTTPException(status_code=400, detail="Role must be 'admin' or 'user'")
+    if user_id == admin["id"] and body.role == "user":
+        admin_count = len([
+            u for u in (supabase.table("profiles").select("id,role").execute().data or [])
+            if u["role"] == "admin"
+        ])
+        if admin_count <= 1:
+            raise HTTPException(status_code=400, detail="Cannot demote yourself — you are the last admin")
     supabase.table("profiles").update({"role": body.role}).eq("id", user_id).execute()
     return {"message": f"Role updated to {body.role}"}
 
 
 
 @router.delete("/users/{user_id}")
-def delete_user(user_id: str, _=Depends(require_admin)):
-
+def delete_user(user_id: str, admin=Depends(require_admin)):
+    if user_id == admin["id"]:
+        raise HTTPException(status_code=400, detail="Cannot delete your own account")
     supabase.auth.admin.delete_user(user_id)
     return {"message": "User deleted"}

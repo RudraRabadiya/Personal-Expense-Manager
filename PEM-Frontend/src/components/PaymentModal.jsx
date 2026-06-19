@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import api from '../lib/api'
+import { fmt } from '../lib/utils'
 import toast from 'react-hot-toast'
-
-const fmt = n => Number(n||0).toLocaleString('en-IN')
 
 export default function PaymentModal({ udhar, onClose, onSuccess }) {
   const [payments, setPayments] = useState([])

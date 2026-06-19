@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth, entries, udhar, admin, payments, reports
@@ -11,9 +10,6 @@ app.add_middleware(
         "https://personal-expense-manager-gules.vercel.app",
         "https://personalexpensemanager.dpdns.org",
         "http://localhost:5173",
-
-
-
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -29,7 +25,7 @@ app.include_router(reports.router)
 
 @app.get("/")
 def root():
-    return {"status": "KhataBook API running ✅"}
+    return {"status": "PEM API running ✅"}
 
 @app.get("/health")
 def health():

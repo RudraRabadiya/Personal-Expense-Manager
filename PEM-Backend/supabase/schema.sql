@@ -49,10 +49,22 @@ create table if not exists public.udhar (
   type text not null check (type in ('gave', 'got')),
   person_name text not null,
   amount numeric(12,2) not null check (amount > 0),
+  paid_amount numeric(12,2) not null default 0,
   description text default '',
   date date not null default current_date,
-  status text not null default 'pending' check (status in ('pending', 'paid')),
+  due_date date,
+  status text not null default 'pending' check (status in ('pending', 'partial', 'paid')),
   paid_at timestamptz,
+  notes text default '',
+  created_at timestamptz default now()
+);
+
+-- 4. UDHAR PAYMENTS (part payment tracking)
+create table if not exists public.udhar_payments (
+  id uuid default gen_random_uuid() primary key,
+  udhar_id uuid references public.udhar(id) on delete cascade not null,
+  amount numeric(12,2) not null check (amount > 0),
+  date date not null default current_date,
   notes text default '',
   created_at timestamptz default now()
 );
@@ -61,6 +73,7 @@ create table if not exists public.udhar (
 alter table public.profiles enable row level security;
 alter table public.entries enable row level security;
 alter table public.udhar enable row level security;
+alter table public.udhar_payments enable row level security;
 
 -- Helper function to check if the current user is an admin without recursion
 create or replace function public.is_admin()
@@ -113,8 +126,27 @@ create policy "Admins view all udhar"
   on public.udhar for select
   using (public.is_admin());
 
+-- Udhar payments: users manage own (via udhar ownership)
+drop policy if exists "Users manage own udhar_payments" on public.udhar_payments;
+drop policy if exists "Admins view all udhar_payments" on public.udhar_payments;
+
+create policy "Users manage own udhar_payments"
+  on public.udhar_payments for all
+  using (
+    exists (
+      select 1 from public.udhar
+      where udhar.id = udhar_payments.udhar_id
+        and udhar.user_id = auth.uid()
+    )
+  );
+
+create policy "Admins view all udhar_payments"
+  on public.udhar_payments for select
+  using (public.is_admin());
+
 -- ─── INDEXES ───
 create index if not exists idx_entries_user_id on public.entries(user_id);
 create index if not exists idx_entries_date on public.entries(date desc);
 create index if not exists idx_udhar_user_id on public.udhar(user_id);
 create index if not exists idx_udhar_status on public.udhar(status);
+create index if not exists idx_udhar_payments_udhar_id on public.udhar_payments(udhar_id);

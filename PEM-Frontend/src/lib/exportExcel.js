@@ -1,7 +1,5 @@
 import * as XLSX from 'xlsx'
-
-const fmt     = n => Number(n || 0).toLocaleString('en-IN')
-const fmtDate = d => (d ? d.split('-').reverse().join('/') : '-')
+import { fmt, fmtDate } from './utils'
 
 
 export function exportExcel(entries = [], udhar = [], filename = null) {

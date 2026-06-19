@@ -17,18 +17,18 @@ const INCOME_CATS  = ['Salary','Freelance','Business','Investment','Gift','Other
 export default function AddEntryModal({ type: defaultType = 'expense', entry = null, onClose, onSuccess }) {
   const isEdit = !!entry
   const [type, setType] = useState(isEdit ? entry.type : defaultType)
+  const cats = type === 'income' ? INCOME_CATS : EXPENSE_CATS
   const [form, setForm] = useState(isEdit ? {
     amount:      String(entry.amount),
     description: entry.description || '',
-    category:    entry.category    || 'General',
+    category:    entry.category    || cats[0],
     date:        entry.date        || new Date().toISOString().slice(0, 10),
     notes:       entry.notes       || '',
   } : {
-    amount: '', description: '', category: 'General',
+    amount: '', description: '', category: cats[0],
     date: new Date().toISOString().slice(0, 10), notes: '',
   })
   const [loading, setLoading] = useState(false)
-  const cats = type === 'income' ? INCOME_CATS : EXPENSE_CATS
 
   const save = async () => {
     if (!form.amount || !form.description || !form.date) {
@@ -63,7 +63,12 @@ export default function AddEntryModal({ type: defaultType = 'expense', entry = n
           ].map(([t, label, color, bg]) => (
             <button
               key={t}
-              onClick={() => !isEdit && setType(t)}
+              onClick={() => {
+                if (isEdit) return
+                setType(t)
+                const newCats = t === 'income' ? INCOME_CATS : EXPENSE_CATS
+                setForm(prev => ({ ...prev, category: newCats[0] }))
+              }}
               style={{
                 flex: 1, padding: '9px', borderRadius: 10,
                 border: `1.5px solid ${type === t ? color : 'var(--border)'}`,

@@ -19,7 +19,13 @@ export default function Expenses() {
 
   const deleteEntry = async (id) => {
     if (!confirm('Delete this entry?')) return
-    await api.delete(`/entries/${id}`); toast.success('Deleted'); load()
+    try {
+      await api.delete(`/entries/${id}`)
+      toast.success('Deleted')
+      load()
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to delete')
+    }
   }
 
   const total     = entries.reduce((s, e) => s + e.amount, 0)

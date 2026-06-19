@@ -50,6 +50,7 @@ export default function Layout() {
               to={n.to}
               end={n.to === '/dashboard' || n.to === '/admin'}
               className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+              title={n.label}
             >
               <span className="nav-icon">{n.icon}</span>
               <span>{n.label}</span>

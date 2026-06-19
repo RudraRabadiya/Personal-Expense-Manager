@@ -1,17 +1,9 @@
 import { useEffect, useState } from 'react'
 import api from '../lib/api'
-import { fmt, fmtDate, LABELS } from '../lib/utils'
+import { fmt, fmtDate, LABELS, getDueDays } from '../lib/utils'
 import AddUdharModal from '../components/AddUdharModal'
 import PaymentModal from '../components/PaymentModal'
 import toast from 'react-hot-toast'
-
-
-function getDueDays(due_date) {
-  if (!due_date) return null
-  const today = new Date(); today.setHours(0, 0, 0, 0)
-  const due   = new Date(due_date); due.setHours(0, 0, 0, 0)
-  return Math.round((due - today) / (1000 * 60 * 60 * 24))
-}
 
 function DueBadge({ due_date, status }) {
   if (!due_date || status === 'paid') return null
@@ -42,7 +34,13 @@ export default function Udhar() {
 
   const deleteUdhar = async (id) => {
     if (!confirm('Delete this entry?')) return
-    await api.delete(`/udhar/${id}`); toast.success('Deleted'); load()
+    try {
+      await api.delete(`/udhar/${id}`)
+      toast.success('Deleted')
+      load()
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to delete')
+    }
   }
 
   const gave        = udhar.filter(u => u.type === 'gave')
