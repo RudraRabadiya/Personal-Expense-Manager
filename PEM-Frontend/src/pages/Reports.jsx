@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import api from '../lib/api'
 import { fmt, fmtDate, LABELS } from '../lib/utils'
 import { exportExcel } from '../lib/exportExcel'
@@ -16,7 +16,7 @@ export default function Reports() {
   const [data, setData]   = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true)
     try {
       const url = view === 'monthly'
@@ -24,11 +24,11 @@ export default function Reports() {
         : `/reports/yearly?year=${year}`
       const res = await api.get(url)
       setData(res.data)
-    } catch (e) { console.error(e) }
+    } catch (e) { toast.error('Failed to load report') }
     finally { setLoading(false) }
-  }
+  }, [view, year, month])
 
-  useEffect(() => { load() }, [view, year, month])
+  useEffect(() => { load() }, [load])
 
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i)
 

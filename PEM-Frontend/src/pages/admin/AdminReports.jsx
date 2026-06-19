@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../lib/api'
 import { fmt, fmtDate, LABELS } from '../../lib/utils'
+import toast from 'react-hot-toast'
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
 
@@ -17,7 +18,7 @@ export default function AdminReports() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true)
     try {
       const url = view === 'monthly'
@@ -25,11 +26,11 @@ export default function AdminReports() {
         : `/reports/admin/${userId}/yearly?year=${year}`
       const res = await api.get(url)
       setData(res.data)
-    } catch(e) { console.error(e) }
+    } catch(e) { toast.error('Failed to load report') }
     finally { setLoading(false) }
-  }
+  }, [view, year, month, userId])
 
-  useEffect(() => { load() }, [view, year, month, userId])
+  useEffect(() => { load() }, [load])
 
   const years = Array.from({length: 5}, (_, i) => currentYear - i)
 

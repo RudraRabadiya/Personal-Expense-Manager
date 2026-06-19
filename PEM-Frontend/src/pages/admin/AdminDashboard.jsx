@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../lib/api'
+import { fmt, fmtDate } from '../../lib/utils'
 import toast from 'react-hot-toast'
 import { exportUserPDF } from '../../lib/exportPDF'
-
-const fmt  = n => Number(n || 0).toLocaleString('en-IN')
-const fmtDate = d => d ? d.split('-').reverse().join('/') : '—'
 const timeAgo = (dateStr) => {
   if (!dateStr) return 'Never'
   const diff = Math.floor((Date.now() - new Date(dateStr)) / 86400000)

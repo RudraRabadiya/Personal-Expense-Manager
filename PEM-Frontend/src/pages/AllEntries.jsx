@@ -25,11 +25,23 @@ export default function AllEntries() {
 
   const deleteEntry = async (id) => {
     if (!confirm('Delete?')) return
-    await api.delete(`/entries/${id}`); toast.success('Deleted'); load()
+    try {
+      await api.delete(`/entries/${id}`)
+      toast.success('Deleted')
+      load()
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to delete')
+    }
   }
   const deleteUdhar = async (id) => {
     if (!confirm('Delete?')) return
-    await api.delete(`/udhar/${id}`); toast.success('Deleted'); load()
+    try {
+      await api.delete(`/udhar/${id}`)
+      toast.success('Deleted')
+      load()
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to delete')
+    }
   }
 
   const allItems = [

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../lib/api'
-import { fmt, fmtDate, LABELS } from '../lib/utils'
+import { fmt, fmtDate, LABELS, getDueDays } from '../lib/utils'
 import AddEntryModal from '../components/AddEntryModal'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
@@ -12,13 +13,6 @@ function getGreeting() {
   if (h < 12) return 'Good Morning'
   if (h < 17) return 'Good Afternoon'
   return 'Good Evening'
-}
-
-function getDueDays(due_date) {
-  if (!due_date) return null
-  const today = new Date(); today.setHours(0, 0, 0, 0)
-  const due   = new Date(due_date); due.setHours(0, 0, 0, 0)
-  return Math.round((due - today) / (1000 * 60 * 60 * 24))
 }
 
 function buildChartData(entries) {
@@ -43,7 +37,7 @@ function buildChartData(entries) {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
   return (
-    <div style={{ background: '#111827', border: '1px solid #1e2d45', borderRadius: 10, padding: '10px 14px', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '10px 14px', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>
       <div style={{ color: 'var(--muted)', marginBottom: 6, fontFamily: 'var(--font-body)' }}>{label}</div>
       {payload.map(p => (
         <div key={p.dataKey} style={{ color: p.color, marginBottom: 2 }}>
@@ -106,7 +100,7 @@ export default function Dashboard() {
               {[...overdueUdhar, ...dueTodayUdhar].map(u => u.person_name).join(', ')}
             </div>
           </div>
-          <a href="/udhar" style={{ color: 'var(--accent)', fontSize: '0.8rem', fontWeight: 600, whiteSpace: 'nowrap', textDecoration: 'none' }}>View Udhar →</a>
+          <Link to="/udhar" style={{ color: 'var(--accent)', fontSize: '0.8rem', fontWeight: 600, whiteSpace: 'nowrap', textDecoration: 'none' }}>View Udhar →</Link>
         </div>
       )}
 

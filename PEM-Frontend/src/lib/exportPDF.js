@@ -1,8 +1,6 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
-
-const fmt     = n => Number(n || 0).toLocaleString('en-IN')
-const fmtDate = d => d ? d.split('-').reverse().join('/') : '-'
+import { fmt, fmtDate } from './utils'
 
 
 const C = {
