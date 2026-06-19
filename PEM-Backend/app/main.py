@@ -1,13 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import settings
 from app.routes import auth, entries, udhar, admin, payments, reports
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origins_list,
+    allow_origins=[
+        "https://personal-expense-manager-gules.vercel.app",
+        "https://personalexpensemanager.dpdns.org",
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
