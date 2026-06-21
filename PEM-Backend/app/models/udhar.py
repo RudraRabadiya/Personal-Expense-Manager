@@ -8,7 +8,7 @@ class UdharCreate(BaseModel):
     amount: float
     description: Optional[str] = ""
     date: date
-    due_date: Optional[date] = None
+    due_date: Optional[date] = ""
     notes: Optional[str] = ""
 
 class UdharUpdate(BaseModel):
@@ -16,5 +16,5 @@ class UdharUpdate(BaseModel):
         amount: float
         description: Optional[str] = ""
         date: date
-        due_date: Optional[date] = None
+        due_date: Optional[date] = ""
         notes: Optional[str] = ""
